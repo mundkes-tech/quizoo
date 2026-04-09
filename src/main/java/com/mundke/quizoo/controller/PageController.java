@@ -27,6 +27,7 @@ import com.mundke.quizoo.service.QuizService;
 import com.mundke.quizoo.service.ResultService;
 
 
+
 @Controller
 public class PageController {
 

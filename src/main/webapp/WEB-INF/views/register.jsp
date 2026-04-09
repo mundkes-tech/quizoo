@@ -19,7 +19,7 @@
         <button type="submit">Register</button>
     </form>
 
-    <p>Already have an account? <a href="/login">Login</a></p>
+    <p>Already have an account? <a href="/home">Login</a></p>
 </div>
 </body>
 </html>

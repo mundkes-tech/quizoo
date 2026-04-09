@@ -11,4 +11,5 @@ public interface ResultRepository extends JpaRepository<Result, Long> {
 	Optional<Result> findByUserIdAndQuizId(Long userId, Long quizId);
 	List<Result> findByUserUsername(String username);
 	List<Result> findByQuizId(Long quizId);
+	void deleteByQuizId(Long quizId);
 }

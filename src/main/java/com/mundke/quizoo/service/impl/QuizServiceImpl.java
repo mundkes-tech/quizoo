@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mundke.quizoo.model.Quiz;
 import com.mundke.quizoo.repository.QuizRepository;
+import com.mundke.quizoo.repository.ResultRepository;
 import com.mundke.quizoo.service.QuizService;
 
 @Service
@@ -15,6 +17,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Autowired
     private QuizRepository quizRepository;
+
+    @Autowired
+    private ResultRepository resultRepository;
 
     @Override
     public Quiz createQuiz(Quiz quiz) {
@@ -37,10 +42,12 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @Transactional
     public void deleteQuiz(Long id) {
         if (!quizRepository.existsById(id)) {
             throw new RuntimeException("Quiz not found");
         }
+        resultRepository.deleteByQuizId(id);
         quizRepository.deleteById(id);
     }
 
