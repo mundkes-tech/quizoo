@@ -57,7 +57,13 @@ pipeline {
         stage('Test Frontend') {
             steps {
                 dir('frontend') {
-                    bat '"%NODE_PATH%\\npm.cmd" run lint'
+                    bat '''
+                    echo Setting Node environment for tests...
+                    set "PATH=C:\\Program Files\\nodejs;%PATH%"
+
+                    echo Running lint...
+                    npm run lint
+                    '''
                 }
             }
         }
