@@ -30,9 +30,16 @@ pipeline {
             steps {
                 dir('frontend') {
                     bat '''
-                    set PATH=C:\\Program Files\\nodejs;%PATH%
-                    rmdir /s /q node_modules || echo no node_modules
+                    echo Setting up Node environment...
+                    set "PATH=C:\\Program Files\\nodejs;%PATH%"
+
+                    echo Cleaning old dependencies...
+                    if exist node_modules rmdir /s /q node_modules
+
+                    echo Installing dependencies...
                     npm ci
+
+                    echo Building frontend...
                     npm run build
                     '''
                 }
