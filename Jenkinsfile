@@ -7,9 +7,11 @@ pipeline {
 
     environment {
         CI = 'true'
+        NODE_PATH = 'C:\\Program Files\\nodejs'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -27,8 +29,8 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    bat 'npm ci'
-                    bat 'npm run build'
+                    bat '"%NODE_PATH%\\npm.cmd" ci'
+                    bat '"%NODE_PATH%\\npm.cmd" run build'
                 }
             }
         }
@@ -44,7 +46,7 @@ pipeline {
         stage('Test Frontend') {
             steps {
                 dir('frontend') {
-                    bat 'npm run lint'
+                    bat '"%NODE_PATH%\\npm.cmd" run lint'
                 }
             }
         }
@@ -54,7 +56,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo 'Deploy stage: add your server/docker/k8s deployment commands here'
+                echo 'Deploy stage: add your deployment commands here'
             }
         }
     }
@@ -65,6 +67,9 @@ pipeline {
         }
         success {
             archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
+        }
+        failure {
+            echo 'Build failed. Check logs for details.'
         }
     }
 }
