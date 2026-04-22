@@ -29,8 +29,12 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    bat '"%NODE_PATH%\\npm.cmd" ci'
-                    bat '"%NODE_PATH%\\npm.cmd" run build'
+                    bat '''
+                    set PATH=C:\\Program Files\\nodejs;%PATH%
+                    rmdir /s /q node_modules || echo no node_modules
+                    npm ci
+                    npm run build
+                    '''
                 }
             }
         }
